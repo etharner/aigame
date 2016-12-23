@@ -16,6 +16,7 @@ class Engine {
     this.entities = {};
 
     this.currentRound = 0;
+    this.switchRound(this.currentRound);
 
     this.registrator = new Registrator();
 
@@ -61,12 +62,35 @@ class Engine {
           this.game.fields[number][i][j],
           coord
         );
+
+        const roundLeft = boardMargin + roundMargin * j + roundWidth * j;
+        const roundTop = boardHeight / 1.8 + roundMargin * i + roundHeight * i;
+
+        const roundNum = i * 9 + j + 1;
+        let color = missingRoundColor;
+        if (roundNum <= this.game.roundsCount) {
+          color = fieldColor;
+        }
+        if (roundNum - 1 == this.currentRound) {
+          color = currentRoundColor;
+        }
+
+        const roundField = createRoundField(
+          this,
+          roundLeft,
+          roundTop,
+          roundWidth,
+          roundHeight,
+          color,
+          color == currentRoundColor ? "black" : "white",
+          roundNum
+        );
       }
     }
 
-    engine.scene.removeChildren();
-    for (let entity of Object.values(engine.entities)) {
-      engine.scene.addChild(entity);
+    this.scene.removeChildren();
+    for (let entity of Object.values(this.entities)) {
+      this.scene.addChild(entity);
     }
   }
 

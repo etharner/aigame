@@ -10,38 +10,6 @@ function createGame(engine) {
     fontSize
   );
 
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j < 9; j++) {
-      const fieldLeft = boardLeft + fieldMargin * calcIndent(j) + fieldWidth * j;
-      const fieldTop = boardMargin + fieldMargin * calcIndent(i) + fieldHeight * i;
-
-      const gameField = createGameField(
-        engine,
-        fieldLeft,
-        fieldTop,
-        fieldWidth,
-        fieldHeight,
-        fieldColor,
-        engine.game.fields[engine.currentRound][i][j],
-        i * 9 + j
-      );
-
-      const roundLeft = boardMargin + roundMargin * j + roundWidth * j;
-      const roundTop = boardHeight / 1.8 + roundMargin * i + roundHeight * i;
-
-      const roundNum = i * 9 + j + 1;
-      const roundField = createRoundField(
-        engine,
-        roundLeft,
-        roundTop,
-        roundWidth,
-        roundHeight,
-        roundNum <= engine.game.roundsCount ? fieldColor : missingRoundColor,
-        roundNum
-      );
-    }
-  }
-
   const controls = createControls(
     engine,
     controlLeft,
@@ -133,7 +101,7 @@ function createButton(engine, left, top, width, height, color, type)
   engine.entities[engine.registrator.generateStaticName()] = icon;
 }
 
-function createRoundField(engine, left, top, width, height, bgColor, number) {
+function createRoundField(engine, left, top, width, height, bgColor, textColor, number) {
   const rect = createRect(engine, left, top, width, height, bgColor);
 
   if (bgColor != missingRoundColor) {
@@ -149,7 +117,8 @@ function createRoundField(engine, left, top, width, height, bgColor, number) {
     left + (number < 10 ? width / 3 : width / 4),
     top + height / 4,
     number.toString(),
-    roundFontSize
+    roundFontSize,
+    textColor
   );
 
   rect.addChild(text);
@@ -217,11 +186,11 @@ function createO(engine, left, top, radius, number) {
   return o;
 }
 
-function createTextLabel(engine, left, top, text, fontSize) {
+function createTextLabel(engine, left, top, text, fontSize, textColor) {
   const label = new PIXI.Text(
     text, {
       font: fontSize.toString() + "px Helvetica",
-      fill: "white"
+      fill: textColor
     }
   );
   label.x = left;
