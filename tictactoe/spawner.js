@@ -49,12 +49,13 @@ function createControls(engine, left, top, width, height, color) {
 const buttonType = {
   PREV: "prevButton",
   PLAY: "playButton",
-  NEXT: "nextButton"
+  NEXT: "nextButton",
+  STOP: "stopButton"
 }
 
 function createButton(engine, left, top, width, height, color, type)
 {
-  const rect = createRect(engine, left, top, width, height, color);
+  const rect = createRect(engine, left, top, width, height, color, 0, 0);
   rect.interactive = true;
   rect.hitArea = new PIXI.Rectangle(left, top, width, height);
   rect.click = function() {
@@ -64,6 +65,9 @@ function createButton(engine, left, top, width, height, color, type)
         break;
       case buttonType.PLAY:
         engine.playClick();
+        break;
+      case buttonType.STOP:
+        engine.stopClick();
         break;
       case buttonType.NEXT:
         engine.nextClick();
@@ -95,15 +99,31 @@ function createButton(engine, left, top, width, height, color, type)
     icon.lineTo(left + width, top + height / 2);
     icon.lineTo(left + width / 2, top);
   }
+  if (type === buttonType.STOP) {
+    icon.lineTo(left + width / 2, top + height);
+  }
 
   icon.endFill();
 
+  if (type === buttonType.STOP) {
+    const secondIcon = new PIXI.Graphics();
+    secondIcon.beginFill(0, 0);
+    secondIcon.lineStyle(controlLineWidth, controlLineColor);
+
+    secondIcon.moveTo(left + width / 1.2, top);
+    secondIcon.lineTo(left + width / 1.2, top + height);
+
+    secondIcon.endFill();
+
+    icon.addChild(secondIcon);
+  }
+
+  rect.addChild(icon);
   engine.entities[type] = rect;
-  engine.entities[engine.registrator.generateStaticName()] = icon;
 }
 
 function createRoundField(engine, left, top, width, height, bgColor, textColor, number) {
-  const rect = createRect(engine, left, top, width, height, bgColor);
+  const rect = createRect(engine, left, top, width, height, bgColor, 0, 0);
 
   if (bgColor != missingRoundColor) {
     rect.interactive = true;
@@ -126,8 +146,12 @@ function createRoundField(engine, left, top, width, height, bgColor, textColor, 
   engine.entities["round" + number.toString()] = rect;
 }
 
-function createGameField(engine, left, top, width, height, bgColor, player, number) {
-  const rect = createRect(engine, left, top, width, height, bgColor);
+function createGameField(
+  engine, left, top, width, height, bgColor, player, number, lineWidth, lineColor
+) {
+  const rect = createRect(
+    engine, left, top, width, height, bgColor, lineWidth, lineColor
+  );
 
   let ox = null;
   if (player == 1) {
@@ -200,9 +224,10 @@ function createTextLabel(engine, left, top, text, fontSize, textColor) {
   return label;
 }
 
-function createRect(engine, left, top, width, height, bgColor) {
+function createRect(engine, left, top, width, height, bgColor, lineWidth, lineColor) {
   const rect = new PIXI.Graphics();
   rect.beginFill(bgColor);
+  rect.lineStyle(lineWidth, lineColor);
   rect.drawRoundedRect(left, top, width, height);
 
   return rect;

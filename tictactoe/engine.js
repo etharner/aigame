@@ -18,6 +18,9 @@ class Engine {
     this.currentRound = 0;
     this.switchRound(this.currentRound);
 
+    this.playing = false;
+    this.time = null;
+
     this.registrator = new Registrator();
 
     createGame(this);
@@ -30,16 +33,45 @@ class Engine {
   }
 
   playClick() {
-    alert("Play clicked");
+    this.playing = true;
+    this.time = new Date();
+
+    delete this.entities["playButton"];
+    createButton(
+      engine,
+      controlLeft + controlWidth + controlMargin,
+      controlTop, controlWidth, controlHeight,
+      controlColor,
+      buttonType.STOP
+    );
+    this.scene.addChild(this.entities["stopButton"]);
+  }
+
+  stopClick() {
+    this.playing = false;
+    this.time = null;
+
+    delete this.entities["stopButton"];
+    createButton(
+      engine,
+      controlLeft + controlWidth + controlMargin,
+      controlTop, controlWidth, controlHeight,
+      controlColor,
+      buttonType.PLAY
+    );
+    this.scene.addChild(this.entities["playButton"]);
   }
 
   nextClick() {
     if (this.currentRound < this.game.roundsCount - 1) {
       this.switchRound(this.currentRound + 1);
+    } else {
+      this.playing = false;
     }
   }
 
   roundClick(number) {
+    this.stopClick();
     this.switchRound(number - 1);
   }
 
@@ -96,6 +128,19 @@ class Engine {
 
   render() {
       requestAnimationFrame(this.render.bind(this));
+
+      if (this.playing) {
+        if (this.currentRound == this.game.roundsCount - 1) {
+          this.stopClick();
+        } else {
+          const time = new Date();
+          if ((time - this.time) / 1000 > 1) {
+            this.time = time;
+            this.nextClick()
+          }
+        }
+      }
+
 
       this.renderer.render(this.scene);
   }
