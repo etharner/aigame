@@ -1,26 +1,112 @@
-function createControls(left, top, width, height, color) {
-  const prevButton = createButton(
-    left, top, width, height, color, buttonType.PREV
-  );
-  const playButton = createButton(
-    left + width + controlMargin, top, width, height, color, buttonType.PLAY
-  );
-  const nextButton = createButton(
-    left + 2 * width + 2 * controlMargin, top, width, height, color, buttonType.NEXT
+function createGame(engine) {
+  let currentField = new Array(9).fill(new Array(9).fill(0));
+
+  for (let r = 0; r < engine.currentRound; r++) {
+    currentField[engine.game.moves[r].x][engine.game.moves[r].y] = r % 2 == 0 ? 1 : 2;
+  }
+
+  engine.entities[engine.registrator.generateStaticName()] =
+  createTextLabel(engine, boardLeft / 3, boardMargin, "TicTacToe", fontSize);
+  engine.entities[engine.registrator.generateStaticName()] =
+  createTextLabel(
+    engine,
+    boardLeft / 6,
+    height / 10,
+    engine.game.firstPlayer + " vs " + engine.game.secondPlayer,
+    fontSize
   );
 
-  return prevButton.concat(playButton.concat(nextButton));
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      const fieldLeft = boardLeft + fieldMargin * calcIndent(j) + fieldWidth * j;
+      const fieldTop = boardMargin + fieldMargin * calcIndent(i) + fieldHeight * i;
+
+      const gameField = createGameField(
+        engine,
+        fieldLeft,
+        fieldTop,
+        fieldWidth,
+        fieldHeight,
+        fieldColor,
+        currentField[i][j],
+         i * 9 + j
+      );
+
+      const roundLeft = boardMargin + roundMargin * j + roundWidth * j;
+      const roundTop = boardHeight / 1.8 + roundMargin * i + roundHeight * i;
+
+      const roundNum = i * 9 + j + 1;
+      const roundField = createRoundField(
+        engine,
+        roundLeft,
+        roundTop,
+        roundWidth,
+        roundHeight,
+        roundNum <= engine.game.roundsCount ? fieldColor : missingRoundColor,
+        roundNum
+      );
+    }
+  }
+
+  const controls = createControls(
+    engine,
+    controlLeft,
+    controlTop,
+    controlWidth,
+    controlHeight,
+    controlColor
+  );
+
+  for (let entity of Object.values(engine.entities)) {
+    engine.scene.addChild(entity);
+  }
+}
+
+function calcIndent(c) {
+  let indent = c + 1;
+  if (c / 3 > 0) {
+    return Math.floor(c / 3) + indent;
+  }
+
+  return indent;
+}
+
+function createControls(engine, left, top, width, height, color) {
+  const prevButton = createButton(
+    engine, left, top, width, height, color, buttonType.PREV
+  );
+  const playButton = createButton(
+    engine, left + width + controlMargin, top, width, height, color, buttonType.PLAY
+  );
+  const nextButton = createButton(
+    engine, left + 2 * width + 2 * controlMargin, top, width, height, color, buttonType.NEXT
+  );
 }
 
 const buttonType = {
-  PREV: 0,
-  PLAY: 1,
-  NEXT: 2
+  PREV: "prevButton",
+  PLAY: "playButton",
+  NEXT: "nextButton"
 }
 
-function createButton(left, top, width, height, color, type)
+function createButton(engine, left, top, width, height, color, type)
 {
-  const rect = createRect(left, top, width, height, color);
+  const rect = createRect(engine, left, top, width, height, color);
+  rect.interactive = true;
+  rect.hitArea = new PIXI.Rectangle(left, top, width, height);
+  rect.click = function() {
+    switch (type) {
+      case buttonType.PREV:
+        engine.prevClick();
+        break;
+      case buttonType.PLAY:
+        engine.playClick();
+        break;
+      case buttonType.NEXT:
+        engine.nextClick();
+        break;
+    }
+  }
 
   const icon = new PIXI.Graphics();
   icon.beginFill(0, 0);
@@ -49,53 +135,63 @@ function createButton(left, top, width, height, color, type)
 
   icon.endFill();
 
-  return [rect, icon]
+  engine.entities[type] = rect;
+  engine.entities[engine.registrator.generateStaticName()] = icon;
 }
 
-function createRoundField(left, top, width, height, bgColor, number) {
-  const rect = createRect(left, top, width, height, bgColor);
+function createRoundField(engine, left, top, width, height, bgColor, number) {
+  const rect = createRect(engine, left, top, width, height, bgColor);
 
   if (bgColor != missingRoundColor) {
     rect.interactive = true;
     rect.hitArea = new PIXI.Rectangle(left, top, width, height);
     rect.click = function() {
-      alert("ROUND " + number.toString())
+      engine.roundClick(number);
     }
   }
 
   const text = createTextLabel(
+    engine,
     left + (number < 10 ? width / 3 : width / 4),
     top + height / 4,
     number.toString(),
     roundFontSize
   );
 
-  return [rect, text];
+  rect.addChild(text);
+  engine.entities["round" + number.toString()] = rect;
 }
 
-function createGameField(left, top, width, height, bgColor, player) {
-  const rect = createRect(left, top, width, height, bgColor);
+function createGameField(engine, left, top, width, height, bgColor, player, number) {
+  const rect = createRect(engine, left, top, width, height, bgColor);
 
-  let xo = null;
+  let ox = null;
   if (player == 1) {
-    xo = createX(
+    ox = createX(
+      engine,
       left + width / 2,
       top + height / 2,
-      xRadius
+      xRadius,
+      number
     );
   }
   if (player == 2) {
-    xo = createO(
+    ox = createO(
+      engine,
       left + width / 2,
       top + height / 2,
-      oRadius
+      oRadius,
+      number
     );
   }
 
-  return [rect, xo];
+  if (ox != null) {
+    rect.addChild(ox);
+  }
+  engine.entities["xo" + number] = rect;
 }
 
-function createX(left, top, radius) {
+function createX(engine, left, top, radius, number) {
   const x = new PIXI.Graphics();
   x.beginFill(0, 0);
   x.lineStyle(xoLineWidth, xColor);
@@ -115,7 +211,7 @@ function createX(left, top, radius) {
   return x;
 }
 
-function createO(left, top, radius) {
+function createO(engine, left, top, radius, number) {
   const o = new PIXI.Graphics();
   o.beginFill(0, 0);
   o.lineStyle(xoLineWidth, oColor);
@@ -127,7 +223,7 @@ function createO(left, top, radius) {
   return o;
 }
 
-function createTextLabel(left, top, text, fontSize) {
+function createTextLabel(engine, left, top, text, fontSize) {
   const label = new PIXI.Text(
     text, {
       font: fontSize.toString() + "px Helvetica",
@@ -140,7 +236,7 @@ function createTextLabel(left, top, text, fontSize) {
   return label;
 }
 
-function createRect(left, top, width, height, bgColor) {
+function createRect(engine, left, top, width, height, bgColor) {
   const rect = new PIXI.Graphics();
   rect.beginFill(bgColor);
   rect.drawRoundedRect(left, top, width, height);
