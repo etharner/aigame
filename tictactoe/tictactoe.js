@@ -3,38 +3,44 @@ canvas.width = width;
 canvas.height = height;
 
 const renderer = PIXI.autoDetectRenderer(
-  canvas.width, canvas.height, {view: canvas}
+  canvas.width, canvas.height, { view: canvas }, true, true
 );
-renderer.backgroundColor = backgroundColor;
+renderer.backgroundColor = bgColor;
 
 const scene = new PIXI.Container();
 
-const game = "";
-
-drawGameField(game);
+const game = parseMatch(match);
+drawGameField(game, 29);
 
 renderer.render(scene);
 
-function drawGameField(game) {
-  scene.addChild(createRect(
-    boardLeft,
-    boardMargin,
-    boardWidth,
-    boardHeight,
-    boardBorderWidth,
-    boardBorderColor
-  ));
+function drawGameField(game, round) {
+  let currentField = new Array(9).fill(new Array(9).fill(0));
+
+  for (let r = 0; r < round; r++) {
+    currentField[game.moves[r].x][game.moves[r].y] = r % 2 == 0 ? 1 : 2;
+  }
 
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
-      scene.addChild(createRect(
-        boardLeft + fieldMargin * calcIndent(j) + fieldWidth * j,
-        boardMargin + fieldMargin * calcIndent(i) + fieldHeight * i,
+      const fieldLeft = boardLeft + fieldMargin * calcIndent(j) + fieldWidth * j;
+      const fieldTop = boardMargin + fieldMargin * calcIndent(i) + fieldHeight * i;
+
+      const gameField = createGameField(
+        fieldLeft,
+        fieldTop,
         fieldWidth,
         fieldHeight,
-        1,
-        boardBorderColor
-      ));
+        fieldColor,
+        currentField[i][j]
+      )
+
+      for (let entity of field) {
+        if (entity != null) {
+          scene.addChild(entity);
+        }
+      }
+
     }
   }
 }
