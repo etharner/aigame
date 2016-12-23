@@ -1,35 +1,55 @@
 function createControls(left, top, width, height, color) {
-  const leftButton = createRect(left, top, width, height, color);
-  const centerButton = createRect(
-    left + width + controlMargin, top, width, height, color
+  const prevButton = createButton(
+    left, top, width, height, color, buttonType.PREV
   );
-  const rightButton = createRect(
-    left + 2 * width + 2 * controlMargin, top, width, height, color
+  const playButton = createButton(
+    left + width + controlMargin, top, width, height, color, buttonType.PLAY
+  );
+  const nextButton = createButton(
+    left + 2 * width + 2 * controlMargin, top, width, height, color, buttonType.NEXT
   );
 
-  return [leftButton, centerButton, rightButton];
+  return prevButton.concat(playButton.concat(nextButton));
 }
 
-function createGameField(left, top, width, height, bgColor, player) {
-  const rect = createRect(left, top, width, height, bgColor);
+const buttonType = {
+  PREV: 0,
+  PLAY: 1,
+  NEXT: 2
+}
 
-  let xo = null;
-  if (player == 1) {
-    xo = createX(
-      left + width / 2,
-      top + height / 2,
-      xRadius
-    );
+function createButton(left, top, width, height, color, type)
+{
+  const rect = createRect(left, top, width, height, color);
+
+  const icon = new PIXI.Graphics();
+  icon.beginFill(0, 0);
+  icon.lineStyle(controlLineWidth, controlLineColor);
+
+  left = type === buttonType.PREV ? left + width / 5 : left - width / 12;
+  top += controlIconMargin;
+  width -= controlIconMargin * 2;
+  height -= controlIconMargin * 2;
+
+  icon.moveTo(left + width / 2, top);
+  if (type === buttonType.PREV) {
+    icon.lineTo(left, top + height / 2);
+    icon.lineTo(left + width / 2, top + height);
+    icon.lineTo(left, top + height / 2);
+    icon.lineTo(left + width / 2, top);
   }
-  if (player == 2) {
-    xo = createO(
-      left + width / 2,
-      top + height / 2,
-      oRadius
-    );
+  if (type === buttonType.PLAY || type === buttonType.NEXT) {
+    icon.lineTo(left + width, top + height / 2);
+    icon.lineTo(left + width / 2, top + height);
+  }
+  if (type === buttonType.NEXT) {
+    icon.lineTo(left + width, top + height / 2);
+    icon.lineTo(left + width / 2, top);
   }
 
-  return [rect, xo];
+  icon.endFill();
+
+  return [rect, icon]
 }
 
 function createRoundField(left, top, width, height, bgColor, number) {
@@ -53,6 +73,28 @@ function createRect(left, top, width, height, bgColor) {
   rect.drawRoundedRect(left, top, width, height);
 
   return rect;
+}
+
+function createGameField(left, top, width, height, bgColor, player) {
+  const rect = createRect(left, top, width, height, bgColor);
+
+  let xo = null;
+  if (player == 1) {
+    xo = createX(
+      left + width / 2,
+      top + height / 2,
+      xRadius
+    );
+  }
+  if (player == 2) {
+    xo = createO(
+      left + width / 2,
+      top + height / 2,
+      oRadius
+    );
+  }
+
+  return [rect, xo];
 }
 
 function createX(left, top, radius) {

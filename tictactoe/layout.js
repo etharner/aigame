@@ -24,3 +24,5 @@ const controlLeft = boardMargin;
 const controlTop = boardHeight / 1.8 + roundMargin * 9 + roundHeight * 9;
 const controlWidth = (roundWidth * 9 + roundMargin * 8 - controlMargin * 2) / 3;
 const controlHeight = roundHeight * 2;
+const controlLineWidth = xoLineWidth;
+const controlIconMargin = controlMargin;
