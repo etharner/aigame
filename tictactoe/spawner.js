@@ -1,3 +1,15 @@
+function createControls(left, top, width, height, color) {
+  const leftButton = createRect(left, top, width, height, color);
+  const centerButton = createRect(
+    left + width + controlMargin, top, width, height, color
+  );
+  const rightButton = createRect(
+    left + 2 * width + 2 * controlMargin, top, width, height, color
+  );
+
+  return [leftButton, centerButton, rightButton];
+}
+
 function createGameField(left, top, width, height, bgColor, player) {
   const rect = createRect(left, top, width, height, bgColor);
 

@@ -15,6 +15,8 @@ drawGameField(game, 29);
 renderer.render(scene);
 
 function drawGameField(game, round) {
+  let entities = [];
+
   let currentField = new Array(9).fill(new Array(9).fill(0));
 
   for (let r = 0; r < round; r++) {
@@ -44,15 +46,27 @@ function drawGameField(game, round) {
         roundWidth,
         roundHeight,
         fieldColor,
-        i * 9 + j
+        i * 9 + j + 1
       );
 
-      for (let entity of gameField.concat(roundField)) {
-        if (entity != null) {
-          scene.addChild(entity);
-        }
-      }
+      entities.push.apply(entities, gameField);
+      entities.push.apply(entities, roundField);
+    }
+  }
 
+  const controls = createControls(
+    controlLeft,
+    controlTop,
+    controlWidth,
+    controlHeight,
+    controlColor
+  );
+
+  entities.push.apply(entities, controls);
+
+  for (let entity of entities) {
+    if (entity != null) {
+      scene.addChild(entity);
     }
   }
 }
