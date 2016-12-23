@@ -13,3 +13,8 @@ const fieldHeight = fieldWidth;
 const xoLineWidth = 3;
 const oRadius = fieldWidth / 2;
 const xRadius = fieldWidth / 2 - width / 150;
+
+const roundMargin = fieldMargin / 2;
+const roundWidth = fieldWidth / 3;
+const roundHeight = roundWidth;
+const roundTextSize = roundWidth / 2;

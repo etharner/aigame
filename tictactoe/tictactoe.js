@@ -33,9 +33,21 @@ function drawGameField(game, round) {
         fieldHeight,
         fieldColor,
         currentField[i][j]
-      )
+      );
 
-      for (let entity of field) {
+      const roundLeft = boardMargin + roundMargin * j + roundWidth * j;
+      const roundTop = boardHeight / 1.8 + roundMargin * i + roundHeight * i;
+
+      const roundField = createRoundField(
+        roundLeft,
+        roundTop,
+        roundWidth,
+        roundHeight,
+        fieldColor,
+        i * 9 + j
+      );
+
+      for (let entity of gameField.concat(roundField)) {
         if (entity != null) {
           scene.addChild(entity);
         }

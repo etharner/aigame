@@ -20,6 +20,21 @@ function createGameField(left, top, width, height, bgColor, player) {
   return [rect, xo];
 }
 
+function createRoundField(left, top, width, height, bgColor, number) {
+  const rect = createRect(left, top, width, height, bgColor);
+
+  const text = new PIXI.Text(
+    number.toString(), {
+      font: roundTextSize.toString() + "px Helvetica",
+      fill: "white"
+    }
+  );
+  text.x = left + (number < 10 ? width / 3 : width / 4);
+  text.y = top + height / 4;
+
+  return [rect, text];
+}
+
 function createRect(left, top, width, height, bgColor) {
   const rect = new PIXI.Graphics();
   rect.beginFill(bgColor);
@@ -43,6 +58,8 @@ function createX(left, top, radius) {
   x.lineTo(left - radius, top + radius);
   x.lineTo(left, top);
 
+  x.endFill();
+
   return x;
 }
 
@@ -50,7 +67,10 @@ function createO(left, top, radius) {
   const o = new PIXI.Graphics();
   o.beginFill(0, 0);
   o.lineStyle(xoLineWidth, oColor);
+
   o.drawCircle(left, top, radius - xoLineWidth);
+
+  o.endFill();
 
   return o;
 }
