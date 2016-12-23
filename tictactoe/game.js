@@ -8,11 +8,12 @@
 //`
 
 class Game {
-  constructor(firstPlayer, secondPlayer, roundsCount, fields, winner) {
+  constructor(firstPlayer, secondPlayer, roundsCount, fields, moves, winner) {
     this.firstPlayer = firstPlayer;
     this.secondPlayer = secondPlayer;
     this.roundsCount = roundsCount;
     this.fields = fields;
+    this.moves = moves;
     this.winner = winner;
   }
 }
@@ -30,8 +31,9 @@ function parseMatch(match) {
   const secondPlayer = lines[1];
   const roundsCount = parseInt(lines[2]);
 
-  this.fields = new Array(roundsCount);
-  
+  fields = new Array(roundsCount);
+  moves = new Array(roundsCount);
+
   for (let r = 0; r < roundsCount; r++) {
     const move = new Move(lines[3 + r]);
     const player = r % 2 == 0 ? 1 : 2;
@@ -45,7 +47,8 @@ function parseMatch(match) {
     }
     currentField[move.x][move.y] = player;
 
-    this.fields[r] = currentField;
+    fields[r] = currentField;
+    moves[r] = move;
   }
 
   const winner = lines[3 + roundsCount];
