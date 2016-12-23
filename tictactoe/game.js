@@ -53,5 +53,5 @@ function parseMatch(match) {
 
   const winner = lines[3 + roundsCount];
 
-  return new Game(firstPlayer, secondPlayer, roundsCount, fields, winner);
+  return new Game(firstPlayer, secondPlayer, roundsCount, fields, moves, winner);
 }

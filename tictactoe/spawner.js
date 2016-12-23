@@ -1,13 +1,14 @@
 function createGame(engine) {
   engine.entities[engine.registrator.generateStaticName()] =
-  createTextLabel(engine, boardLeft / 3, boardMargin, "TicTacToe", fontSize);
+  createTextLabel(engine, boardLeft / 3, boardMargin, "TicTacToe", fontSize, "white");
   engine.entities[engine.registrator.generateStaticName()] =
   createTextLabel(
     engine,
     boardLeft / 6,
     height / 10,
     engine.game.firstPlayer + " vs " + engine.game.secondPlayer,
-    fontSize
+    fontSize,
+    "white"
   );
 
   const controls = createControls(
