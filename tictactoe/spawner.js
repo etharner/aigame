@@ -22,7 +22,7 @@ function createGame(engine) {
         fieldWidth,
         fieldHeight,
         fieldColor,
-        engine.currentField[i][j],
+        engine.game.fields[engine.currentRound][i][j],
         i * 9 + j
       );
 
@@ -50,6 +50,10 @@ function createGame(engine) {
     controlHeight,
     controlColor
   );
+
+  for (let entity of Object.values(engine.entities)) {
+    engine.scene.addChild(entity);
+  }
 }
 
 function calcIndent(c) {

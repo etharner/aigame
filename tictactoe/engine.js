@@ -9,13 +9,13 @@ class Engine {
     );
     this.renderer.backgroundColor = bgColor;
 
-    this.scene = new PIXI.Stage();
+    this.scene = new PIXI.Container();
 
     this.game = parseMatch(match);
 
     this.entities = {};
 
-    this.setCurrentRound(0);
+    this.currentRound = 0;
 
     this.registrator = new Registrator();
 
@@ -39,21 +39,11 @@ class Engine {
   }
 
   roundClick(number) {
-    this.switchRound(number);
-  }
-
-  setCurrentRound(number) {
-    this.currentRound = number;
-
-    this.currentField = new Array(9).fill(new Array(9).fill(0));
-    for (let r = 0; r < this.currentRound; r++) {
-      this.currentField[this.game.moves[r].x][this.game.moves[r].y] =
-       r % 2 == 0 ? 1 : 2;
-    }
+    this.switchRound(number - 1);
   }
 
   switchRound(number) {
-    this.setCurrentRound(number);
+    this.currentRound = number;
 
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
@@ -68,19 +58,20 @@ class Engine {
           fieldWidth,
           fieldHeight,
           fieldColor,
-          this.currentField[i][j],
+          this.game.fields[number][i][j],
           coord
         );
       }
+    }
+
+    engine.scene.removeChildren();
+    for (let entity of Object.values(engine.entities)) {
+      engine.scene.addChild(entity);
     }
   }
 
   render() {
       requestAnimationFrame(this.render.bind(this));
-
-      for (let entity of Object.values(engine.entities)) {
-        engine.scene.addChild(entity);
-      }
 
       this.renderer.render(this.scene);
   }
