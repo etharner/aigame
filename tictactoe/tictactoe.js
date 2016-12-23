@@ -12,7 +12,13 @@ const scene = new PIXI.Stage();
 const game = parseMatch(match);
 drawGameField(game, 29);
 
-renderer.render(scene);
+animate();
+
+function animate() {
+    requestAnimationFrame(animate);
+
+    renderer.render(scene);
+}
 
 function drawGameField(game, round) {
   let entities = [];
