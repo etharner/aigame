@@ -15,7 +15,9 @@ class Engine {
 
     this.entities = {};
 
-    this.currentRound = 10;
+    this.currentField = new Array(9).fill(new Array(9).fill(0));
+
+    this.setCurrentRound(2);
 
     this.registrator = new Registrator();
 
@@ -36,6 +38,15 @@ class Engine {
 
   roundClick(number) {
     alert("ROUND " + number.toString())
+  }
+
+  setCurrentRound(number) {
+    this.currentRound = number;
+
+    for (let r = 0; r < this.currentRound; r++) {
+      this.currentField[this.game.moves[r].x][this.game.moves[r].y] =
+       r % 2 == 0 ? 1 : 2;
+    }
   }
 
   render() {

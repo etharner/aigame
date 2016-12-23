@@ -1,10 +1,4 @@
 function createGame(engine) {
-  let currentField = new Array(9).fill(new Array(9).fill(0));
-
-  for (let r = 0; r < engine.currentRound; r++) {
-    currentField[engine.game.moves[r].x][engine.game.moves[r].y] = r % 2 == 0 ? 1 : 2;
-  }
-
   engine.entities[engine.registrator.generateStaticName()] =
   createTextLabel(engine, boardLeft / 3, boardMargin, "TicTacToe", fontSize);
   engine.entities[engine.registrator.generateStaticName()] =
@@ -28,8 +22,8 @@ function createGame(engine) {
         fieldWidth,
         fieldHeight,
         fieldColor,
-        currentField[i][j],
-         i * 9 + j
+        engine.currentField[i][j],
+        i * 9 + j
       );
 
       const roundLeft = boardMargin + roundMargin * j + roundWidth * j;
