@@ -50,10 +50,6 @@ function createGame(engine) {
     controlHeight,
     controlColor
   );
-
-  for (let entity of Object.values(engine.entities)) {
-    engine.scene.addChild(entity);
-  }
 }
 
 function calcIndent(c) {

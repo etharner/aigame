@@ -15,9 +15,7 @@ class Engine {
 
     this.entities = {};
 
-    this.currentField = new Array(9).fill(new Array(9).fill(0));
-
-    this.setCurrentRound(2);
+    this.setCurrentRound(0);
 
     this.registrator = new Registrator();
 
@@ -25,7 +23,9 @@ class Engine {
   }
 
   prevClick() {
-    alert("Prev clicked");
+    if (this.currentRound > 0) {
+      this.switchRound(this.currentRound - 1);
+    }
   }
 
   playClick() {
@@ -33,24 +33,54 @@ class Engine {
   }
 
   nextClick() {
-    alert("NextClicked");
+    if (this.currentRound < this.game.roundsCount - 1) {
+      this.switchRound(this.currentRound + 1);
+    }
   }
 
   roundClick(number) {
-    alert("ROUND " + number.toString())
+    this.switchRound(number);
   }
 
   setCurrentRound(number) {
     this.currentRound = number;
 
+    this.currentField = new Array(9).fill(new Array(9).fill(0));
     for (let r = 0; r < this.currentRound; r++) {
       this.currentField[this.game.moves[r].x][this.game.moves[r].y] =
        r % 2 == 0 ? 1 : 2;
     }
   }
 
+  switchRound(number) {
+    this.setCurrentRound(number);
+
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        const coord = i * 9 + j;
+        const fieldLeft = boardLeft + fieldMargin * calcIndent(j) + fieldWidth * j;
+        const fieldTop = boardMargin + fieldMargin * calcIndent(i) + fieldHeight * i;
+
+        createGameField(
+          this,
+          fieldLeft,
+          fieldTop,
+          fieldWidth,
+          fieldHeight,
+          fieldColor,
+          this.currentField[i][j],
+          coord
+        );
+      }
+    }
+  }
+
   render() {
       requestAnimationFrame(this.render.bind(this));
+
+      for (let entity of Object.values(engine.entities)) {
+        engine.scene.addChild(entity);
+      }
 
       this.renderer.render(this.scene);
   }
