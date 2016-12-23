@@ -7,7 +7,7 @@ const renderer = PIXI.autoDetectRenderer(
 );
 renderer.backgroundColor = bgColor;
 
-const scene = new PIXI.Container();
+const scene = new PIXI.Stage();
 
 const game = parseMatch(match);
 drawGameField(game, 29);
@@ -22,6 +22,14 @@ function drawGameField(game, round) {
   for (let r = 0; r < round; r++) {
     currentField[game.moves[r].x][game.moves[r].y] = r % 2 == 0 ? 1 : 2;
   }
+
+  entities.push(createTextLabel(boardLeft / 3, boardMargin, "TicTacToe", fontSize));
+  entities.push(createTextLabel(
+    boardLeft / 6,
+    height / 10,
+    game.firstPlayer + " vs " + game.secondPlayer,
+    fontSize
+  ));
 
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
@@ -40,13 +48,14 @@ function drawGameField(game, round) {
       const roundLeft = boardMargin + roundMargin * j + roundWidth * j;
       const roundTop = boardHeight / 1.8 + roundMargin * i + roundHeight * i;
 
+      const roundNum = i * 9 + j + 1;
       const roundField = createRoundField(
         roundLeft,
         roundTop,
         roundWidth,
         roundHeight,
-        fieldColor,
-        i * 9 + j + 1
+        roundNum <= game.roundsCount ? fieldColor : missingRoundColor,
+        roundNum
       );
 
       entities.push.apply(entities, gameField);
@@ -70,6 +79,8 @@ function drawGameField(game, round) {
     }
   }
 }
+
+
 
 function calcIndent(c) {
   let indent = c + 1;

@@ -55,24 +55,22 @@ function createButton(left, top, width, height, color, type)
 function createRoundField(left, top, width, height, bgColor, number) {
   const rect = createRect(left, top, width, height, bgColor);
 
-  const text = new PIXI.Text(
-    number.toString(), {
-      font: roundTextSize.toString() + "px Helvetica",
-      fill: "white"
+  if (bgColor != missingRoundColor) {
+    rect.interactive = true;
+    rect.hitArea = new PIXI.Rectangle(left, top, width, height);
+    rect.click = function() {
+      alert("ROUND " + number.toString())
     }
+  }
+
+  const text = createTextLabel(
+    left + (number < 10 ? width / 3 : width / 4),
+    top + height / 4,
+    number.toString(),
+    roundFontSize
   );
-  text.x = left + (number < 10 ? width / 3 : width / 4);
-  text.y = top + height / 4;
 
   return [rect, text];
-}
-
-function createRect(left, top, width, height, bgColor) {
-  const rect = new PIXI.Graphics();
-  rect.beginFill(bgColor);
-  rect.drawRoundedRect(left, top, width, height);
-
-  return rect;
 }
 
 function createGameField(left, top, width, height, bgColor, player) {
@@ -127,4 +125,25 @@ function createO(left, top, radius) {
   o.endFill();
 
   return o;
+}
+
+function createTextLabel(left, top, text, fontSize) {
+  const label = new PIXI.Text(
+    text, {
+      font: fontSize.toString() + "px Helvetica",
+      fill: "white"
+    }
+  );
+  label.x = left;
+  label.y = top;
+
+  return label;
+}
+
+function createRect(left, top, width, height, bgColor) {
+  const rect = new PIXI.Graphics();
+  rect.beginFill(bgColor);
+  rect.drawRoundedRect(left, top, width, height);
+
+  return rect;
 }
