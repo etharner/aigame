@@ -31,18 +31,20 @@ function parseMatch(match) {
   const secondPlayer = lines[1];
   const roundsCount = parseInt(lines[2]);
 
-  fields = new Array(roundsCount);
-  moves = new Array(roundsCount);
+  fields = new Array(roundsCount + 1);
+  fields[0] = new Array(9).fill(new Array(9).fill(0));
+  moves = new Array(roundsCount + 1);
+  moves[0] = new Move(0, 0);
 
-  for (let r = 0; r < roundsCount; r++) {
-    const move = new Move(lines[3 + r]);
-    const player = r % 2 == 0 ? 1 : 2;
+  for (let r = 1; r <= roundsCount; r++) {
+    const move = new Move(lines[3 + r - 1]);
+    const player = r % 2 == 1 ? 1 : 2;
 
     let currentField = new Array(9);
     for (let i = 0; i < 9; i++) {
       currentField[i] = new Array(9);
       for (let j = 0; j < 9; j++) {
-        currentField[i][j] = r > 0 ? this.fields[r - 1][i][j] : 0;
+        currentField[i][j] = this.fields[r - 1][i][j];
       }
     }
     currentField[move.x][move.y] = player;

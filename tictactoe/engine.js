@@ -63,7 +63,7 @@ class Engine {
   }
 
   nextClick() {
-    if (this.currentRound < this.game.roundsCount - 1) {
+    if (this.currentRound <= this.game.roundsCount) {
       this.switchRound(this.currentRound + 1);
     } else {
       this.playing = false;
@@ -72,7 +72,7 @@ class Engine {
 
   roundClick(number) {
     this.stopClick();
-    this.switchRound(number - 1);
+    this.switchRound(number);
   }
 
   switchRound(number) {
@@ -99,11 +99,12 @@ class Engine {
         const roundTop = boardHeight / 1.8 + roundMargin * i + roundHeight * i;
 
         const roundNum = i * 9 + j + 1;
+
         let color = missingRoundColor;
         if (roundNum <= this.game.roundsCount) {
           color = fieldColor;
         }
-        if (roundNum - 1 == this.currentRound) {
+        if (roundNum == this.currentRound) {
           color = currentRoundColor;
         }
 
@@ -130,7 +131,7 @@ class Engine {
       requestAnimationFrame(this.render.bind(this));
 
       if (this.playing) {
-        if (this.currentRound == this.game.roundsCount - 1) {
+        if (this.currentRound == this.game.roundsCount) {
           this.stopClick();
         } else {
           const time = new Date();
