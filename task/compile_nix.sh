@@ -1,3 +1,2 @@
-cd controller
-/usr/bin/javac -d bin $(find -name "*.java")
-/usr/bin/javac ../bot/*.java
+/usr/bin/javac -d controller/bin $(find controller/ -name "*.java")
+/usr/bin/javac bot/*.java
