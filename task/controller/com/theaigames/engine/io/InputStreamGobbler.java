@@ -44,7 +44,7 @@ public class InputStreamGobbler extends Thread {
 	private boolean finished;
 	private Engine engine;
 
-	InputStreamGobbler(InputStream inputStream, String type, Engine engine) {
+	public InputStreamGobbler(InputStream inputStream, String type, Engine engine) {
         this.inputStream = inputStream;
         this.type = type;
         this.buffer = new StringBuffer();
