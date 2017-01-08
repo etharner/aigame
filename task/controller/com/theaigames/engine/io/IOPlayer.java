@@ -19,8 +19,11 @@
 
 package com.theaigames.engine.io;
 
+import com.theaigames.engine.Engine;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * IOPlayer class
@@ -32,9 +35,6 @@ import java.io.OutputStreamWriter;
 public class IOPlayer implements Runnable {
 
     private String normalId;
-    private OutputStreamWriter inputStream;
-    private InputStreamGobbler outputGobbler;
-    private InputStreamGobbler errorGobbler;
     private StringBuilder dump;
     private int errorCounter;
     private boolean finished;
@@ -47,9 +47,6 @@ public class IOPlayer implements Runnable {
     public String response;
 
     public IOPlayer(String normalId, Engine engine) {
-      this.inputStream = new OutputStreamWriter(System.out);
-    	this.outputGobbler = new InputStreamGobbler(System.in, this, "output");
-    	this.errorGobbler = new InputStreamGobbler(System.in, this, "error");
       this.normalId = normalId;
       this.idString = normalId;
       this.dump = new StringBuilder();
@@ -66,8 +63,8 @@ public class IOPlayer implements Runnable {
     public void writeToBot(String line) throws IOException {
         if (!this.finished) {
             try {
-        		this.inputStream.write(line + "\n");
-        		this.inputStream.flush();
+        		this.engine.inputStream.write(line + "\n");
+        		this.engine.inputStream.flush();
             } catch(IOException e) {
                 System.err.println("Writing to bot failed");
             }
@@ -127,15 +124,11 @@ public class IOPlayer implements Runnable {
             return;
 
         // stop the bot's IO
-    	try { this.inputStream.close(); } catch (IOException e) {}
-    	this.outputGobbler.finish();
-    	this.errorGobbler.finish();
+    	//try { this.engine.inputStream.close(); } catch (IOException e) {}
+    	this.engine.outputGobbler.finish();
+    	this.engine.errorGobbler.finish();
 
-    	// end the bot process
-    	this.process.destroy();
-    	try { this.process.waitFor(); } catch (InterruptedException ex) {}
-
-        this.finished = true;
+      this.finished = true;
     }
 
     /**
@@ -172,14 +165,14 @@ public class IOPlayer implements Runnable {
      * @return : the complete stdOut from the bot process
      */
     public String getStdout() {
-    	return this.outputGobbler.getData();
+    	return this.engine.outputGobbler.getData();
     }
 
     /**
      * @return : the complete stdErr from the bot process
      */
     public String getStderr() {
-    	return this.errorGobbler.getData();
+    	return this.engine.errorGobbler.getData();
     }
 
     /**
@@ -193,8 +186,5 @@ public class IOPlayer implements Runnable {
     /**
      * Start the communication with the bot
      */
-    public void run() {
-        this.outputGobbler.start();
-        this.errorGobbler.start();
-    }
+    public void run() {}
 }

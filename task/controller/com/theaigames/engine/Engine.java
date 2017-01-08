@@ -20,7 +20,11 @@
 package com.theaigames.engine;
 
 import com.theaigames.engine.io.IOPlayer;
+import com.theaigames.engine.io.InputStreamGobbler;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 /**
  * Engine class
@@ -38,10 +42,18 @@ public class Engine {
     private Logic logic; // Class implementing Logic interface; handles all data
     private ArrayList<IOPlayer> players; // ArrayList containing player handlers
 
+    public OutputStreamWriter inputStream;
+    public InputStreamGobbler outputGobbler;
+    public InputStreamGobbler errorGobbler;
+
     // Engine constructor
     public Engine() {
         this.isRunning = false;
         this.players = new ArrayList<IOPlayer>();
+
+        this.inputStream = new OutputStreamWriter(System.out);
+        this.outputGobbler = new InputStreamGobbler(System.in, "output", this);
+        this.errorGobbler = new InputStreamGobbler(System.in, "error", this);
     }
 
     /**
@@ -53,6 +65,11 @@ public class Engine {
 
       // Add player
       this.players.add(player);
+    }
+
+    public void runIO() {
+      this.outputGobbler.start();
+      this.errorGobbler.start();
     }
 
     /**

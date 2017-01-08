@@ -89,6 +89,7 @@ public abstract class AbstractGame implements Logic {
 		for(int i=0; i < botIds.size(); i++) {
 			this.engine.addPlayer(botIds.get(i));
 		}
+		this.engine.runIO();
 	}
 
 	/**
