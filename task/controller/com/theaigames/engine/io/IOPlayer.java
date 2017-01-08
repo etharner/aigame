@@ -132,13 +132,6 @@ public class IOPlayer implements Runnable {
     }
 
     /**
-     * @return : the bot process
-     */
-    public Process getProcess() {
-        return this.process;
-    }
-
-    /**
      * @return : String representation of the bot ID as used in the database
      */
     public String getIdString() {
