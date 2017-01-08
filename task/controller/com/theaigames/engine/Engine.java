@@ -40,8 +40,8 @@ public class Engine {
 
     private boolean isRunning; // Boolean representing current engine running state
     private Logic logic; // Class implementing Logic interface; handles all data
-    private ArrayList<IOPlayer> players; // ArrayList containing player handlers
 
+    public ArrayList<IOPlayer> players; // ArrayList containing player handlers
     public OutputStreamWriter inputStream;
     public InputStreamGobbler outputGobbler;
     public InputStreamGobbler errorGobbler;
