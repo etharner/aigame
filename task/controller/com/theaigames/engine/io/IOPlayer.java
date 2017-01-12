@@ -143,6 +143,8 @@ public class IOPlayer implements Runnable {
     public void finish() {
         if(this.finished)
             return;
+        System.out.print(normalId + "S#\n");
+        System.out.flush();
 
         this.finished = true;
     }
