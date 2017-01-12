@@ -20,7 +20,6 @@
 package com.theaigames.engine;
 
 import com.theaigames.engine.io.IOPlayer;
-import com.theaigames.engine.io.InputStreamGobbler;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.InputStream;
