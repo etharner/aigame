@@ -66,9 +66,9 @@ public abstract class AbstractGame implements Logic {
 	public void setupEngine(String args[]) throws IOException, RuntimeException {
 
         // create engine
-    this.engine = new Engine();
+    	this.engine = new Engine();
 
-    List<String> botIds = new ArrayList<>();
+    	List<String> botIds = new ArrayList<>();
 
 		if (args.length <= 0) {
 			throw new RuntimeException("No arguments provided.");
@@ -77,12 +77,12 @@ public abstract class AbstractGame implements Logic {
 		int botsCount = Integer.parseInt(args[0]);
 
 		for (int i=1; i <= botsCount; i++) {
-	  	botIds.add(i + "");
-	  }
+	  		botIds.add(i + "");
+	  	}
 
-    // check is the starting arguments are passed correctly
-    if (botIds.isEmpty())
-        throw new RuntimeException("Missing some arguments.");
+    	// check is the starting arguments are passed correctly
+    	if (botIds.isEmpty())
+        	throw new RuntimeException("Missing some arguments.");
 
 		// add the players
 		for(int i=0; i < botIds.size(); i++) {

@@ -44,12 +44,12 @@ public class IOPlayer implements Runnable {
     public String response;
 
     public IOPlayer(String normalId, Engine engine) {
-      this.normalId = normalId;
-      this.idString = normalId;
-      this.dump = new StringBuilder();
-      this.errorCounter = 0;
-      this.finished = false;
-      this.engine = engine;
+        this.normalId = normalId;
+        this.idString = normalId;
+        this.dump = new StringBuilder();
+        this.errorCounter = 0;
+        this.finished = false;
+        this.engine = engine;
     }
 
     /**

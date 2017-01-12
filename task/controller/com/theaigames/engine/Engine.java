@@ -58,10 +58,10 @@ public class Engine {
      * @param command : command to start a bot process
      */
     public void addPlayer(String normalId) throws IOException {
-      IOPlayer player = new IOPlayer(normalId, this);
+        IOPlayer player = new IOPlayer(normalId, this);
 
-      // Add player
-      this.players.add(player);
+        // Add player
+        this.players.add(player);
     }
 
     /**
