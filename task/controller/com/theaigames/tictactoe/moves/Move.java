@@ -8,11 +8,11 @@ import com.theaigames.game.player.AbstractPlayer;
 public class Move extends AbstractMove {
 
 	private int mColumn = 0, mRow = 0;
-	
+
 	public Move(AbstractPlayer player) {
 		super(player);
 	}
-	
+
 	/**
 	 * @param column : Sets the column of a move
 	 */
