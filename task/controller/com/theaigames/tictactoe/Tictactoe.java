@@ -52,7 +52,7 @@ public class Tictactoe extends AbstractGame {
 	@Override
 	protected void runEngine() throws Exception {
 	    //System.out.println("starting...");
-	    System.out.println("const match = `");
+	    //System.out.println("const match = `");
 
 		super.engine.setLogic(this);
 		super.engine.start();
@@ -67,13 +67,13 @@ public class Tictactoe extends AbstractGame {
 		}*/
 
 		for (Player player : players) {
-			System.out.println(player.getName());
+			//System.out.println(player.getName());
 		}
 
-		System.out.println(this.processor.getRoundNumber());
+		//System.out.println(this.processor.getRoundNumber());
 
 		for (Move move : moves) {
-			System.out.format("[%d %d]\n", move.getRow(), move.getColumn());
+			//System.out.format("[%d %d]\n", move.getRow(), move.getColumn());
 			/*gameField[move.getRow()][move.getColumn()] = move.getPlayer().getName();
 
         	for (int x = 0; x < 9; x++) {
@@ -90,7 +90,7 @@ public class Tictactoe extends AbstractGame {
 				}
 			}*/
 		}
-		System.out.println(this.processor.getWinner().getName());
+		//System.out.println(this.processor.getWinner().getName());
 	}
 
 	public static void main(String args[]) throws Exception {
