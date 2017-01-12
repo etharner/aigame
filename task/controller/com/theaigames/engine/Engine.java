@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 /**
  * Engine class
@@ -42,18 +44,14 @@ public class Engine {
     private Logic logic; // Class implementing Logic interface; handles all data
 
     public ArrayList<IOPlayer> players; // ArrayList containing player handlers
-    public OutputStreamWriter inputStream;
-    public InputStreamGobbler outputGobbler;
-    public InputStreamGobbler errorGobbler;
+    public BufferedReader bufferedReader;
 
     // Engine constructor
     public Engine() {
         this.isRunning = false;
         this.players = new ArrayList<IOPlayer>();
 
-        this.inputStream = new OutputStreamWriter(System.out);
-        this.outputGobbler = new InputStreamGobbler(System.in, "output", this);
-        this.errorGobbler = new InputStreamGobbler(System.in, "error", this);
+        this.bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     }
 
     /**
@@ -65,11 +63,6 @@ public class Engine {
 
       // Add player
       this.players.add(player);
-    }
-
-    public void runIO() {
-      this.outputGobbler.start();
-      this.errorGobbler.start();
     }
 
     /**

@@ -21,9 +21,6 @@ package com.theaigames.engine.io;
 
 import com.theaigames.engine.Engine;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * IOPlayer class
@@ -60,14 +57,12 @@ public class IOPlayer implements Runnable {
      * @param line : input string
      * @throws IOException
      */
-    public void writeToBot(String line) throws IOException {
+    public void writeToBot(String line, Boolean requestMove) throws IOException {
         if (!this.finished) {
-            try {
-              this.engine.inputStream.write(normalId + "#" + line + "\n");
-          		this.engine.inputStream.flush();
-            } catch(IOException e) {
-                System.err.println("Writing to bot failed");
-            }
+            System.out.print(normalId + "#" + line + "\n");
+            System.out.print(normalId + "W#\n");
+
+          	System.out.flush();
             addToDump(line);
         }
     }
@@ -78,6 +73,14 @@ public class IOPlayer implements Runnable {
      * @return : bot's response, returns and empty string when there is no response
      */
     public String getResponse(long timeOut) {
+        if(this.finished) {
+            try {
+            	this.engine.bufferedReader.close();
+            } catch (IOException e) {}
+            return "";
+        }
+
+
     	long timeStart = System.currentTimeMillis();
     	String enginesays = "Output from your bot: ";
     	String response;
@@ -87,7 +90,22 @@ public class IOPlayer implements Runnable {
     		return "";
     	}
 
+        String lastLine;
+
     	while(this.response == null) {
+            try {
+                lastLine = this.engine.bufferedReader.readLine();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            if (lastLine != null) {
+                String[] splitted = lastLine.split("#");
+                int normalId = Integer.parseInt(splitted[0]);
+                lastLine =  splitted[1];
+
+                this.response = lastLine;
+            }
     		long timeNow = System.currentTimeMillis();
 			long timeElapsed = timeNow - timeStart;
 
@@ -104,10 +122,13 @@ public class IOPlayer implements Runnable {
 			try { Thread.sleep(2); } catch (InterruptedException e) {}
     	}
 		if(this.response.equalsIgnoreCase("no_moves")) {
+
 			this.response = null;
             addToDump(String.format("%s\"%s\"", enginesays, this.NULL_MOVE));
 			return "";
 		}
+
+
 
 		response = this.response;
 		this.response = null;
@@ -123,12 +144,7 @@ public class IOPlayer implements Runnable {
         if(this.finished)
             return;
 
-        // stop the bot's IO
-    	//try { this.engine.inputStream.close(); } catch (IOException e) {}
-    	this.engine.outputGobbler.finish();
-    	this.engine.errorGobbler.finish();
-
-      this.finished = true;
+        this.finished = true;
     }
 
     /**
@@ -152,20 +168,6 @@ public class IOPlayer implements Runnable {
      */
     public void outputEngineWarning(String warning) {
     	dump.append(String.format("Engine warning: \"%s\"\n", warning));
-    }
-
-    /**
-     * @return : the complete stdOut from the bot process
-     */
-    public String getStdout() {
-    	return this.engine.outputGobbler.getData();
-    }
-
-    /**
-     * @return : the complete stdErr from the bot process
-     */
-    public String getStderr() {
-    	return this.engine.errorGobbler.getData();
     }
 
     /**
