@@ -138,9 +138,6 @@ public abstract class AbstractGame implements Logic {
 			}
 		}
 
-		//System.out.println("`");
-		//System.out.println("Done.");
-
         System.exit(0);
 	}
 
@@ -151,8 +148,5 @@ public abstract class AbstractGame implements Logic {
 		// save results to file here
 
         String playedGame = this.processor.getPlayedGame();
-
-		//System.out.println("winner: " + this.processor.getWinner().getName());
-		//System.out.println(playedGame);
 	}
 }

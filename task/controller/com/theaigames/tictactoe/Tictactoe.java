@@ -19,9 +19,6 @@ public class Tictactoe extends AbstractGame {
 
 	@Override
 	public void setupGame(ArrayList<IOPlayer> ioPlayers) throws Exception {
-
-		//System.out.println("Setting up game...");
-
 		// create all the players and everything they need
 		this.players = new ArrayList<>();
 
@@ -53,9 +50,6 @@ public class Tictactoe extends AbstractGame {
 
 	@Override
 	protected void runEngine() throws Exception {
-	    //System.out.println("starting...");
-	    //System.out.println("const match = `");
-
 		super.engine.setLogic(this);
 		super.engine.start();
 	}

@@ -29,7 +29,7 @@ import com.theaigames.tictactoe.player.Player;
 import com.theaigames.game.GameHandler;
 
 public class Processor implements GameHandler {
-	
+
 	private int mMoveNumber = 1;
 	private int mRoundNumber = -1;
 	private List<Player> mPlayers;
@@ -47,7 +47,6 @@ public class Processor implements GameHandler {
 
 	@Override
 	public void playRound(int roundNumber) {
-	    //System.out.println(String.format("playing round %d", roundNumber));
 	    mRoundNumber = roundNumber;
 		for (Player player : mPlayers) {
 			if (!isGameOver()) {
@@ -66,7 +65,7 @@ public class Processor implements GameHandler {
 			}
 		}
 	}
-	
+
 	/**
 	 * Parses player response and inserts disc in field
 	 * @return : true if valid move, otherwise false
@@ -78,7 +77,7 @@ public class Processor implements GameHandler {
 		    try {
     			int column = (int) Double.parseDouble(parts[1]);
     			int row = (int) Double.parseDouble(parts[2]);
-    			
+
     			if (mField.addMove(column, row, player.getId())) {
                     recordMove(player, oldFieldPresentationString);
                     return true;
@@ -94,23 +93,23 @@ public class Processor implements GameHandler {
 		recordMove(player, oldFieldPresentationString);
 		return false;
 	}
-	
+
 	private void createParseError(Player player, String input) {
 	    mField.setLastError("Error: failed to parse input");
         player.getBot().outputEngineWarning(String.format("Failed to parse input '%s'", input));
 	}
-	
+
 	private void recordMove(Player player, String oldFieldPresentationString) {
 		Move move = new Move(player);
 		move.setMove(mField.getLastX(), mField.getLastY());
 		move.setIllegalMove(mField.getLastError());
 		mMoves.add(move);
-		
+
 		MoveResult moveResult = new MoveResult(player, move, oldFieldPresentationString, mField);
 		moveResult.setMoveNumber(mMoveNumber);
 		mMoveResults.add(moveResult);
 	}
-	
+
 	@Override
 	public int getRoundNumber() {
 		return this.mRoundNumber;
