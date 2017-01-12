@@ -88,7 +88,6 @@ public abstract class AbstractGame implements Logic {
 		for(int i=0; i < botIds.size(); i++) {
 			this.engine.addPlayer(botIds.get(i));
 		}
-		this.engine.runIO();
 	}
 
 	/**
@@ -127,11 +126,10 @@ public abstract class AbstractGame implements Logic {
 	{
 		// stop the bots
 		this.engine.getPlayers().forEach(IOPlayer::finish);
-		Thread.sleep(100);
 
 		if (DEV_MODE) { // print the game file when in DEV_MODE
 			String playedGame = this.processor.getPlayedGame();
-			System.out.println(playedGame);
+			//System.out.println(playedGame);
 		} else { // save the game to database
 			try {
 				this.saveGame();
@@ -140,7 +138,7 @@ public abstract class AbstractGame implements Logic {
 			}
 		}
 
-		System.out.println("`");
+		//System.out.println("`");
 		//System.out.println("Done.");
 
         System.exit(0);
@@ -154,7 +152,7 @@ public abstract class AbstractGame implements Logic {
 
         String playedGame = this.processor.getPlayedGame();
 
-		System.out.println("winner: " + this.processor.getWinner().getName());
-		System.out.println(playedGame);
+		//System.out.println("winner: " + this.processor.getWinner().getName());
+		//System.out.println(playedGame);
 	}
 }
