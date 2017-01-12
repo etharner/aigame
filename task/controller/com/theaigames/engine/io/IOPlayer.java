@@ -57,7 +57,7 @@ public class IOPlayer implements Runnable {
      * @param line : input string
      * @throws IOException
      */
-    public void writeToBot(String line, Boolean requestMove) throws IOException {
+    public void writeToBot(String line) throws IOException {
         if (!this.finished) {
             System.out.print(normalId + "#" + line + "\n");
             System.out.print(normalId + "W#\n");
