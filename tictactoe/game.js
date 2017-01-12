@@ -15,6 +15,7 @@ class Game {
     this.fields = fields;
     this.moves = moves;
     this.winner = winner;
+    this.match = "";
   }
 }
 
@@ -25,8 +26,21 @@ class Move {
   }
 }
 
-function parseMatch(match) {
-  const lines = match.split("\n").slice(1, -1);
+function readTextFile(file) {
+  var req = new XMLHttpRequest();
+
+  var game = this;
+  req.addEventListener('load', function() {
+      game.match = this.responseText;
+  }, false);
+
+  req.open("GET", file, false);
+  req.send();
+}
+
+function parseMatch(matchFile) {
+  readTextFile(matchFile);
+  const lines = this.match.split("\n");
   const firstPlayer = lines[0];
   const secondPlayer = lines[1];
   const roundsCount = parseInt(lines[2]);

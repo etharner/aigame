@@ -11,7 +11,7 @@ class Engine {
 
     this.scene = new PIXI.Container();
 
-    this.game = parseMatch(match);
+    this.game = parseMatch("C:\\dev\\aigame\\tictactoe\\out.txt");
 
     this.entities = {};
 
