@@ -13,8 +13,8 @@ import com.theaigames.tictactoe.player.Player;
 
 public class Tictactoe extends AbstractGame {
 
-	private final int TIMEBANK_MAX = 10000;
-	private final int TIME_PER_MOVE = 500;
+	private final int TIMEBANK_MAX = 100000;
+	private final int TIME_PER_MOVE = 5000;
 	private List<Player> players;
 
 	@Override
@@ -65,10 +65,10 @@ public class Tictactoe extends AbstractGame {
 				pr.println(player.getName());
 			}
 
-			pr.println(this.processor.getRoundNumber());
+			pr.println(moves.size());
 
 			for (Move move : moves) {
-				pr.format("[%d %d]\n", move.getRow(), move.getColumn());
+				pr.format("[%d %d]\n", move.getColumn(), move.getRow());
 			}
 			pr.println(this.processor.getWinner().getName());
 
