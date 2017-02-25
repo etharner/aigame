@@ -10,5 +10,5 @@ SET visualizator="file:///C:/dev/aigame/tictactoe/index.html"
  --// --in=*1.stdout --out=*1.stdin %java% -cp %engine% com.theaigames.tictactoe.Tictactoe ^
  --// %java% bot.BotStarter
 
-copy out.txt ..\tictactoe
+move out.txt ..\tictactoe
 %chrome% %visualizator% --allow-file-access-from-files
