@@ -51,9 +51,6 @@ public class Tictactoe extends AbstractGame {
 
 	@Override
 	protected void runEngine() throws Exception {
-	    //System.out.println("starting...");
-	    System.out.println("const match = `");
-
 		super.engine.setLogic(this);
 		super.engine.start();
 	}
