@@ -94,6 +94,14 @@ public class IOPlayer implements Runnable {
      * @return : bot's response, returns and empty string when there is no response
      */
     public String getResponse(long timeOut) {
+      if (this.isPlayer) {
+        if(this.finished) {
+            try {
+              this.engine.bufferedReader.close();
+            } catch (IOException e) {}
+            return "";
+        }
+      }
     	long timeStart = System.currentTimeMillis();
     	String enginesays = "Output from your bot: ";
     	String response;
@@ -103,7 +111,20 @@ public class IOPlayer implements Runnable {
     		return "";
     	}
 
+      String lastLine;
+
     	while(this.response == null) {
+          if (this.isPlayer) {
+            try {
+                lastLine = this.engine.bufferedReader.readLine();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            if (lastLine != null) {
+                this.response = lastLine;
+            }
+          }
     		long timeNow = System.currentTimeMillis();
 			long timeElapsed = timeNow - timeStart;
 
