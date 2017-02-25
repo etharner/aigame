@@ -106,23 +106,13 @@ public abstract class AbstractGame implements Logic {
 	{
 		// stop the bots
 		this.engine.getPlayers().forEach(IOPlayer::finish);
-		Thread.sleep(100);
-
-		if (DEV_MODE) { // print the game file when in DEV_MODE
-			String playedGame = this.processor.getPlayedGame();
-			System.out.println(playedGame);
-		} else { // save the game to database
-			try {
-				this.saveGame();
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
+		try {
+			this.saveGame();
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 
-		System.out.println("`");
-		//System.out.println("Done.");
-
-        System.exit(0);
+		System.exit(0);
 	}
 
 	/**
