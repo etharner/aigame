@@ -54,18 +54,18 @@ public class Engine {
      * @param command : command to start a bot process
      */
     public void addPlayer(String command, String idString) throws IOException {
+      Process process;
+      if (command != "") {
+        process = Runtime.getRuntime().exec(command);
+      } else {
+        process = null;
+      }
 
-        // Create new process
-    	Process process = Runtime.getRuntime().exec(command);
+      IOPlayer player = new IOPlayer(process, idString, this);
 
-        // Attach IO to process
-        IOPlayer player = new IOPlayer(process, idString);
+      this.players.add(player);
 
-        // Add player
-        this.players.add(player);
-
-        // Start running
-        player.run();
+      player.run();
     }
 
     /**
