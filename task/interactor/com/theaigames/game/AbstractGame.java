@@ -64,47 +64,10 @@ public abstract class AbstractGame implements Logic {
 	 * @throws RuntimeException
 	 */
 	public void setupEngine(String args[]) throws IOException, RuntimeException {
+		this.engine = new Engine();
 
-        // create engine
-        this.engine = new Engine();
-
-        // add the test bots if in DEV_MODE
-        if (DEV_MODE) {
-            if (TEST_BOT.isEmpty()) {
-                throw new RuntimeException("DEV_MODE: Please provide a command to start the test bot by setting 'TEST_BOT' in your main class.");
-            }
-            if (NUM_TEST_BOTS <= 0) {
-                throw new RuntimeException("DEV_MODE: Please provide the number of bots in this game by setting 'NUM_TEST_BOTS' in your main class.");
-            }
-
-            for (int i = 0; i < NUM_TEST_BOTS; i++) {
-                this.engine.addPlayer(TEST_BOT, "ID_" + i);
-            }
-
-            return;
-        }
-
-        // add the bots from the arguments if not in DEV_MODE
-        List<String> botDirs = new ArrayList<>();
-        List<String> botIds = new ArrayList<>();
-
-		if (args.length <= 0) {
-			throw new RuntimeException("No arguments provided.");
-		}
-
-		for (int i=0; i < args.length; i++) {
-			botIds.add(i + "");
-			botDirs.add(args[i]);
-		}
-
-        // check is the starting arguments are passed correctly
-        if (botIds.isEmpty() || botDirs.isEmpty() || botIds.size() != botDirs.size())
-            throw new RuntimeException("Missing some arguments.");
-
-		// add the players
-		for(int i=0; i < botIds.size(); i++) {
-			this.engine.addPlayer(botDirs.get(i), botIds.get(i));
-		}
+		this.engine.addPlayer(TEST_BOT, "1");
+		this.engine.addPlayer("", "2");
 	}
 
 	/**
