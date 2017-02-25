@@ -228,7 +228,10 @@ public class IOPlayer implements Runnable {
      * Start the communication with the bot
      */
     public void run() {
-        this.outputGobbler.start();
-        this.errorGobbler.start();
+      if (this.isPlayer) {
+        return;
+      }
+      this.outputGobbler.start();
+      this.errorGobbler.start();
     }
 }
