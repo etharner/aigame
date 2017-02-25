@@ -2,6 +2,8 @@ package com.theaigames.tictactoe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.PrintWriter;
+import java.io.IOException;
 
 import com.theaigames.engine.io.IOPlayer;
 import com.theaigames.game.AbstractGame;
