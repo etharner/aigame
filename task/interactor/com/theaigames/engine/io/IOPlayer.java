@@ -71,15 +71,21 @@ public class IOPlayer implements Runnable {
      * @throws IOException
      */
     public void writeToBot(String line) throws IOException {
-        if (!this.finished) {
-            try {
-        		this.inputStream.write(line + "\n");
-        		this.inputStream.flush();
-            } catch(IOException e) {
-                System.err.println("Writing to bot failed");
+      if (!this.finished) {
+          try {
+            if (this.isPlayer) {
+              System.out.print(line + "\n");
+              System.out.flush();
+            } else {
+              this.inputStream.write(line + "\n");
+              this.inputStream.flush();
             }
-            addToDump(line);
-        }
+
+          } catch(IOException e) {
+              System.err.println("Writing to bot failed");
+          }
+          addToDump(line);
+      }
     }
 
     /**
