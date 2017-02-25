@@ -57,37 +57,26 @@ public class Tictactoe extends AbstractGame {
 
 	@Override
 	public void saveGame() {
-		List<Move> moves = this.processor.getMoves();
-		/*String[][] gameField = new String[9][9];
-		for (String[] row : gameField) {
-			Arrays.fill(row, "0");
-		}*/
+		try {
+				PrintWriter pr = new PrintWriter("out.txt", "UTF-8");
 
-		for (Player player : players) {
-			System.out.println(player.getName());
+			List<Move> moves = this.processor.getMoves();
+
+			for (Player player : players) {
+				pr.println(player.getName());
+			}
+
+			pr.println(moves.size());
+
+			for (Move move : moves) {
+				pr.format("[%d %d]\n", move.getColumn(), move.getRow());
+			}
+			pr.println(this.processor.getWinner().getName());
+
+				pr.close();
+		} catch (IOException ex) {
+				throw new RuntimeException(ex);
 		}
-
-		System.out.println(this.processor.getRoundNumber());
-
-		for (Move move : moves) {
-			System.out.format("[%d %d]\n", move.getRow(), move.getColumn());
-			/*gameField[move.getRow()][move.getColumn()] = move.getPlayer().getName();
-
-        	for (int x = 0; x < 9; x++) {
-        		for (int y = 0; y < 9; y++) {
-					System.out.print(gameField[x][y]);
-					System.out.print(" ");
-					if (y % 3 == 2) {
-						System.out.print(" ");
-					}
-				}
-				System.out.println();
-				if (x % 3 == 2) {
-					System.out.println();
-				}
-			}*/
-		}
-		System.out.println(this.processor.getWinner().getName());
 	}
 
 	public static void main(String args[]) throws Exception {
