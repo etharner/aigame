@@ -48,10 +48,15 @@ public class IOPlayer implements Runnable {
     public String response;
 
     public IOPlayer(Process process, String idString, Engine engine) {
+      if (process != null) {
         this.inputStream = new OutputStreamWriter(process.getOutputStream());
-    	this.outputGobbler = new InputStreamGobbler(process.getInputStream(), this, "output");
-    	this.errorGobbler = new InputStreamGobbler(process.getErrorStream(), this, "error");
+        this.outputGobbler = new InputStreamGobbler(process.getInputStream(), this, "output");
+        this.errorGobbler = new InputStreamGobbler(process.getErrorStream(), this, "error");
         this.process = process;
+        isPlayer = false;
+      } else {
+        isPlayer = true;
+      }
         this.idString = idString;
         this.dump = new StringBuilder();
         this.errorCounter = 0;
