@@ -157,19 +157,19 @@ public class IOPlayer implements Runnable {
      * Ends the bot process and it's communication
      */
     public void finish() {
-        if(this.finished)
-            return;
+      if(this.finished || this.isPlayer) {
+        return;
+      }
+      // stop the bot's IO
+      try { this.inputStream.close(); } catch (IOException e) {}
+        this.outputGobbler.finish();
+        this.errorGobbler.finish();
 
-        // stop the bot's IO
-    	try { this.inputStream.close(); } catch (IOException e) {}
-    	this.outputGobbler.finish();
-    	this.errorGobbler.finish();
+        // end the bot process
+      this.process.destroy();
+      try { this.process.waitFor(); } catch (InterruptedException ex) {}
 
-    	// end the bot process
-    	this.process.destroy();
-    	try { this.process.waitFor(); } catch (InterruptedException ex) {}
-
-        this.finished = true;
+      this.finished = true;
     }
 
     /**
