@@ -40,6 +40,7 @@ public class IOPlayer implements Runnable {
     private int errorCounter;
     private boolean finished;
     private String idString;
+    private boolean isPlayer;
     private Engine engine;
 
     private final int MAX_ERRORS = 2;
