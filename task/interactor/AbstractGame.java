@@ -17,19 +17,10 @@
  *     file that was distributed with this source code.
  */
 
-package com.theaigames.game;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import com.theaigames.engine.Engine;
-import com.theaigames.engine.Logic;
-import com.theaigames.engine.io.IOPlayer;
-import com.theaigames.tictactoe.Processor;
-import com.theaigames.tictactoe.field.Field;
-import com.theaigames.tictactoe.moves.Move;
 
 /**
  * abstract class AbstractGame

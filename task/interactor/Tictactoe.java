@@ -1,15 +1,7 @@
-package com.theaigames.tictactoe;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.io.PrintWriter;
 import java.io.IOException;
-
-import com.theaigames.engine.io.IOPlayer;
-import com.theaigames.game.AbstractGame;
-import com.theaigames.tictactoe.field.Field;
-import com.theaigames.tictactoe.moves.Move;
-import com.theaigames.tictactoe.player.Player;
 
 public class Tictactoe extends AbstractGame {
 

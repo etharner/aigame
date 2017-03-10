@@ -17,10 +17,6 @@
  *     file that was distributed with this source code.
  */
 
-package com.theaigames.tictactoe.field;
-
-import com.theaigames.util.Util;
-
 public class Field {
 	private int[][] mBoard;
 	private int[][] mMacroboard;
@@ -28,7 +24,7 @@ public class Field {
 	private int mCols = 0, mRows = 0;
 	private String mLastError = "";
 	private int mLastX = -1, mLastY = -1;
-	
+
 	public Field() {
 		mCols = 9;
 		mRows = 9;
@@ -36,7 +32,7 @@ public class Field {
 		mMacroboard = new int[mCols / 3][mRows / 3];
 		clearBoard();
 	}
-	
+
 	private void clearBoard() {
 		for (int x = 0; x < mCols; x++) {
 			for (int y = 0; y < mRows; y++) {
@@ -104,14 +100,14 @@ public class Field {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Returns whether microboard is full OR taken
 	 * @return : Boolean
 	 */
     private Boolean microboardFull(int x, int y) {
 		if (x < 0 || y < 0) return true; /* empty board */
-		
+
 		if (mMacroboard[x][y] == 1 || mMacroboard[x][y] == 2) { /* microboard is taken */
 			return true;
 		}
@@ -123,7 +119,7 @@ public class Field {
 		}
 		return true; /* microboard is full */
 	}
-	
+
 	/**
 	 * Returns whether field is in active microboard
 	 * @return : Boolean
@@ -139,11 +135,11 @@ public class Field {
 	public String getLastError() {
 		return mLastError;
 	}
-	
+
 	public void setLastError(String error) {
 	    mLastError = error;
 	}
-	
+
 	/**
 	 * Returns last inserted column
 	 * @return : last inserted column
@@ -151,7 +147,7 @@ public class Field {
 	public int getLastX() {
 		return mLastX;
 	}
-	
+
 	/**
 	 * Returns last inserted row
 	 * @return : last inserted row
@@ -179,7 +175,7 @@ public class Field {
 		}
 		return r;
 	}
-	
+
 	/**
 	 * Creates a string with comma separated ints for every cell.
 	 * @return : String with comma separated ints for every cell.
@@ -229,7 +225,7 @@ public class Field {
 		}
 		return r;
 	}
-	
+
 	/**
 	 * Creates comma separated String with player ids for the macroboard.
 	 * @return : String with player ids for every cell, or 0 when cell
@@ -249,7 +245,7 @@ public class Field {
 		}
 		return r;
 	}
-	
+
 	/**
 	 * Checks if there is a winner, if so, returns player id.
 	 * @return : Returns player id if there is a winner, otherwise returns 0.
@@ -258,7 +254,7 @@ public class Field {
 		updateMacroboard();
 		return checkMacroboardWinner();
 	}
-	
+
 	/**
 	 * Checks the microboards for wins and updates internal representation (macroboard)
 	 */
@@ -280,8 +276,8 @@ public class Field {
 				}
 			}
 		}
-	}	
-	
+	}
+
 	/**
 	 * Checks the microboard for a winner
 	 * @return : player id of winner or 0
@@ -310,7 +306,7 @@ public class Field {
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * Checks the macroboard for a winner
 	 * @return : player id of winner or 0
@@ -337,7 +333,7 @@ public class Field {
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * Checks the board for available moves, takes conquered microboard in account
 	 * @return : Boolean

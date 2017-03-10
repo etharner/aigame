@@ -17,9 +17,6 @@
  *     file that was distributed with this source code.
  */
 
-package com.theaigames.engine;
-
-import com.theaigames.engine.io.IOPlayer;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.io.BufferedReader;

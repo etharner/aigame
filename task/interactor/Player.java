@@ -17,12 +17,6 @@
  *     file that was distributed with this source code.
  */
 
-package com.theaigames.tictactoe.player;
-
-import com.theaigames.engine.io.IOPlayer;
-import com.theaigames.game.player.AbstractPlayer;
-import com.theaigames.tictactoe.field.Field;
-
 public class Player extends AbstractPlayer {
 
     private int mId;
