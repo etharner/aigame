@@ -1,38 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CATS version="1.5">
-<Problem title="TicTacToe" lang="en" tlimit="10" mlimit="?"
-   author="theaigames" outputFile="out.js">
-<Picture name="pic" src="pic.png"/>
+<Problem title="TicTacToe" lang="en" tlimit="100" mlimit="2048"
+   author="theaigames" inputFile="in.txt" outputFile="out.txt">
 <ProblemStatement>
-<p>
-You probably know the original Tic Tac Toe game. If not: it's a simple game
-where one player is the X and the other player is the O, playing on a field
-of 3x3 squares. The players take turns picking one of the squares that is
-not occupied. When one of the players gets three squares in a row,
-horizontal, vertical, or diagonal, that player wins.
-</p><p>
-Now Ultimate Tic Tac Toe is quite similar, except each square in the field
-is actually small game of Tic Tac Toe. Only if you win the small game, you
-get the square of the big game. The goal again is to get three (big) squares
-in a row.
-</p><p>
-Above was explained how to get three of the big squares in a row, but there i
-a catch. The most important rule of Ultimate Tic Tac Toe is the following:
-whichever small square your opponent picks, is the next big square you must
-play in. So if your opponent moves first and picks the middle small square
-in the top-right big square, you must pick a small square of the middle big
-square. This might be a bit confusing so an example is shown to the right as
-well, where your color is red and the opponent has just placed the blue X.
-</p><p>
-So what happens if your opponent sends you to a big square that is already won
-(or a draw)? Then you are in luck! You may place your next move on any empty
-square that is not in a big square that is already won. So always keep this in
-mind when doing your own moves.
-</p><p>
-The final rule for this game is what happens when one of the small games ends
-in a draw. If this is the case, the big square is not owned by any of
-the players.</p>
-<img picture="pic"/>
+  <p>
+    You probably know the original Tic Tac Toe game. If not: it's a simple game
+    where one player is the X and the other player is the O, playing on a field
+    of 3x3 squares. The players take turns picking one of the squares that is
+    not occupied. When one of the players gets three squares in a row,
+    horizontal, vertical, or diagonal, that player wins.
+  </p><p>
+    Now Ultimate Tic Tac Toe is quite similar, except each square in the field
+    is actually small game of Tic Tac Toe. Only if you win the small game, you
+    get the square of the big game. The goal again is to get three (big) squares
+    in a row.
+  </p><p>
+    Above was explained how to get three of the big squares in a row, but there i
+    a catch. The most important rule of Ultimate Tic Tac Toe is the following:
+    whichever small square your opponent picks, is the next big square you must
+    play in. So if your opponent moves first and picks the middle small square
+    in the top-right big square, you must pick a small square of the middle big
+    square. This might be a bit confusing so an example is shown to the right as
+    well, where your color is red and the opponent has just placed the blue X.
+  </p><p>
+    So what happens if your opponent sends you to a big square that is already won
+    (or a draw)? Then you are in luck! You may place your next move on any empty
+    square that is not in a big square that is already won. So always keep this in
+    mind when doing your own moves.
+  </p><p>
+    The final rule for this game is what happens when one of the small games ends
+    in a draw. If this is the case, the big square is not owned by any of
+    the players.</p>
 </ProblemStatement>
 
 <InputFormat>
@@ -62,10 +60,31 @@ the players.</p>
   <SampleOut></SampleOut>
 </Sample>
 
-<Module name="bot1" src="bot1/BotStarter.js" />
-<Solution name="bot1" src="bot1/BotStarter.js" />
-<Checker name="ch" de_code=401 src="out/production/ultimatetictactoe-engine/" style="testlib"/>
-<Visualizer name="vis" de_code=1 src="tictactoe/index.html"
+<Run method="interactive" />
+<Module name="solm" de_code="1" type="solution" src="bot/BotParser.java" />
+<Module name="solm" de_code="1" type="solution" src="bot/Field.java" />
+<Module name="solm" de_code="1" type="solution" src="bot/Move.java" />
+<Solution name="sol" src="BotStarter.java" />
 
+<Module name="chm" de_code="1" type="solution" src="interactor/InputStreamGobbler.java" />
+<Module name="chm" de_code="1" type="solution" src="interactor/IOPlayer.java" />
+<Module name="chm" de_code="1" type="solution" src="interactor/Engine.java" />
+<Module name="chm" de_code="1" type="solution" src="interactor/Logic.java" />
+<Module name="chm" de_code="1" type="solution" src="interactor/AbstractMove.java" />
+<Module name="chm" de_code="1" type="solution" src="interactor/AbstractPlayer.java" />
+<Module name="chm" de_code="1" type="solution" src="interactor/AbstractGame.java" />
+<Module name="chm" de_code="1" type="solution" src="interactor/GameHandler.java" />
+<Module name="chm" de_code="1" type="solution" src="interactor/GameField.java" />
+<Module name="chm" de_code="1" type="solution" src="interactor/GameMove.java" />
+<Module name="chm" de_code="1" type="solution" src="interactor/MoveResult.java" />
+<Module name="chm" de_code="1" type="solution" src="interactor/Player.java" />
+<Module name="chm" de_code="1" type="solution" src="interactor/Processor.java" />
+<Module name="chm" de_code="1" type="solution" src="interactor/Util.java" />
+<Module name="chm" de_code="401" type="solution" src="Tictactoe.java" />
+<Checker name="ch" src="check.py" style="testlib" />
+
+<Visualizer name="vis" de_code="1" src="tictactoe/index.html" />
+
+<Test rank="1-1"><In src="tests/1.in" /><Out src="tests/1.out" /></Test>
 </Problem>
 </CATS>
