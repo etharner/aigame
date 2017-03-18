@@ -15,16 +15,15 @@
 //    For the full copyright and license information, please view the LICENSE
 //    file that was distributed with this source code.
 
-package bot;
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
  * BotStarter class
- * 
+ *
  * Magic happens here. You should edit this file, or more specifically
  * the makeTurn() method to make your bot do more than random moves.
- * 
+ *
  * @author Jim van Eeden <jim@starapple.nl>
  */
 
@@ -36,11 +35,11 @@ public class BotStarter {
      *
      * @return The column where the turn was made.
      */
-	public Move makeTurn(Field field) {
+	public Move makeTurn(BotField field) {
 		Random r = new Random();
-		ArrayList<Move> moves = field.getAvailableMoves();
-		Move move = moves.get(r.nextInt(moves.size())); /* get random move from available moves */
-		
+		ArrayList<BotMove> moves = field.getAvailableMoves();
+		BotMove move = moves.get(r.nextInt(moves.size())); /* get random move from available moves */
+
 		return move;
 	}
 

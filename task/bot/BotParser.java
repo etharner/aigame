@@ -33,7 +33,7 @@ public class BotParser {
 	final Scanner scan;
 	final BotStarter bot;
 
-	private Field mField;
+	private BotField mField;
 	public static int mBotId = 0;
 
 	public BotParser(BotStarter bot) {
@@ -42,7 +42,7 @@ public class BotParser {
 	}
 
 	public void run() {
-		mField = new Field();
+		mField = new BotField();
 
 		while(scan.hasNextLine()) {
 			String line = scan.nextLine();
@@ -60,7 +60,7 @@ public class BotParser {
 			    mField.parseGameData(parts[2], parts[3]);
 			} else if(parts[0].equals("action")) {
 				if (parts[1].equals("move")) { /* move requested */
-					Move move = this.bot.makeTurn(mField);
+					BotMove move = this.bot.makeTurn(mField);
 					System.out.print("place_move " + move.getX() + " " + move.getY() + "\n");
 					System.out.flush();
 				}
