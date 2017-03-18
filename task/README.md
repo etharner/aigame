@@ -2,7 +2,7 @@
   * Run `git submodule init`
   * Run `git submodule update`
   * Run `perl ..\cats-judge\install.pl`
-  * Copy `config.xml` to `..\cats-judge` folder
+  * Copy `..\config.xml` to `..\cats-judge` folder (overwrite, if exists)
   * Run `j_install.bat`
 
 ## Running problem
