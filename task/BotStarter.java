@@ -35,7 +35,7 @@ public class BotStarter {
      *
      * @return The column where the turn was made.
      */
-	public Move makeTurn(BotField field) {
+	public BotMove makeTurn(BotField field) {
 		Random r = new Random();
 		ArrayList<BotMove> moves = field.getAvailableMoves();
 		BotMove move = moves.get(r.nextInt(moves.size())); /* get random move from available moves */

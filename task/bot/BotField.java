@@ -99,13 +99,13 @@ public class BotField {
 		}
 	}
 
-	public ArrayList<Move> getAvailableMoves() {
-	    ArrayList<Move> moves = new ArrayList<Move>();
+	public ArrayList<BotMove> getAvailableMoves() {
+	    ArrayList<BotMove> moves = new ArrayList<BotMove>();
 
 		for (int y = 0; y < ROWS; y++) {
             for (int x = 0; x < COLS; x++) {
                 if (isInActiveMicroboard(x, y) && mBoard[x][y] == 0) {
-                    moves.add(new Move(x, y));
+                    moves.add(new BotMove(x, y));
                 }
             }
         }
