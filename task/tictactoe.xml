@@ -55,15 +55,10 @@
 <ProblemConstraints>
 </ProblemConstraints>
 
-<Sample rank="1">
-  <SampleIn></SampleIn>
-  <SampleOut></SampleOut>
-</Sample>
-
 <Run method="interactive" />
 <Module name="solm" de_code="1" type="solution" src="bot/BotParser.java" />
-<Module name="solm" de_code="1" type="solution" src="bot/Field.java" />
-<Module name="solm" de_code="1" type="solution" src="bot/Move.java" />
+<Module name="solm" de_code="1" type="solution" src="bot/BotField.java" />
+<Module name="solm" de_code="1" type="solution" src="bot/BotMove.java" />
 <Solution name="sol" src="BotStarter.java" />
 
 <Module name="chm" de_code="1" type="solution" src="interactor/InputStreamGobbler.java" />
@@ -74,8 +69,8 @@
 <Module name="chm" de_code="1" type="solution" src="interactor/AbstractPlayer.java" />
 <Module name="chm" de_code="1" type="solution" src="interactor/AbstractGame.java" />
 <Module name="chm" de_code="1" type="solution" src="interactor/GameHandler.java" />
-<Module name="chm" de_code="1" type="solution" src="interactor/GameField.java" />
-<Module name="chm" de_code="1" type="solution" src="interactor/GameMove.java" />
+<Module name="chm" de_code="1" type="solution" src="interactor/Field.java" />
+<Module name="chm" de_code="1" type="solution" src="interactor/Move.java" />
 <Module name="chm" de_code="1" type="solution" src="interactor/MoveResult.java" />
 <Module name="chm" de_code="1" type="solution" src="interactor/Player.java" />
 <Module name="chm" de_code="1" type="solution" src="interactor/Processor.java" />
