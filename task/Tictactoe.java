@@ -76,7 +76,7 @@ public class Tictactoe extends AbstractGame {
 	public static void main(String args[]) throws Exception {
 		Tictactoe game = new Tictactoe();
 
-		game.TEST_BOT = "java bot.BotStarter";
+		game.TEST_BOT = "java BotStarter";
 
 		game.setupEngine(args);
 		game.runEngine();
